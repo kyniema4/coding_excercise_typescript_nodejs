@@ -3,7 +3,7 @@ import jetValidator from 'jet-validator';
 
 import Paths from './constants/Paths';
 import User from '@src/models/User';
-import UserRoutes from './UserRoutes';
+import DiscrepancyRoutes from './DiscrepancyRoutes';
 
 
 // **** Variables **** //
@@ -18,10 +18,19 @@ const apiRouter = Router(),
 
 const discrepanciesRouter = Router();
 
+// Get all 
+discrepanciesRouter.get(
+  Paths.Discrepancy.All,
+  DiscrepancyRoutes.getAll,
+);
 
+discrepanciesRouter.get(
+  Paths.Discrepancy.Team,
+  DiscrepancyRoutes.getAll,
+);
 
 // Add UserRouter
-apiRouter.use(Paths.Discrepancies.Base, discrepanciesRouter);
+apiRouter.use(Paths.Discrepancy.Base, discrepanciesRouter);
 
 
 // **** Export default **** //

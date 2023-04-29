@@ -1,6 +1,9 @@
 {
   "name": "coding_excercise",
   "version": "0.0.0",
+  "compilerOptions": {
+    "module": "CommonJS"
+  },
   "scripts": {
     "build": "npx ts-node build.ts",
     "lint": "npx eslint --ext .ts src/",
