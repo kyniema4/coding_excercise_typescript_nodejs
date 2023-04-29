@@ -78,7 +78,7 @@ async function delete_(id: number): Promise<void> {
 
 // **** Export default **** //
 
-export default {
+  export default {
   getOne,
   persists,
   getAll,
