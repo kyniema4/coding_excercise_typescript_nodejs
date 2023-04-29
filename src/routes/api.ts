@@ -2,7 +2,6 @@ import { Router } from 'express';
 import jetValidator from 'jet-validator';
 
 import Paths from './constants/Paths';
-import User from '@src/models/User';
 import DiscrepancyRoutes from './DiscrepancyRoutes';
 
 

@@ -4,12 +4,15 @@
 
 // **** Functions **** //
 
-async function parseSourceInputToCompareFormat(inputData = {}){
+import { readJSON, readJSONSync } from "fs-extra";
 
+async function parseSourceInputToCompareFormat(inputData:any){
+    const {statistics} = inputData;
+    return statistics;
 }
 
-async function parseExternalInputToCompareFormat(inputData = {}){
-    
+async function parseExternalInputToCompareFormat(inputData:any){
+    return inputData;
 }
 
 
@@ -17,7 +20,12 @@ async function parseExternalInputToCompareFormat(inputData = {}){
  * Get by mode0
  */
 async function getDataByField(mode =0){
+    const externalData = readJSONSync(__dirname + '/' +'external.json');
+    const sourceData = readJSONSync(__dirname + '/' +'source.json');
+    const newExternalData = parseSourceInputToCompareFormat(externalData);
+    const newSourceData = parseExternalInputToCompareFormat(sourceData);
 
+    return newSourceData;
 }
 
 /**

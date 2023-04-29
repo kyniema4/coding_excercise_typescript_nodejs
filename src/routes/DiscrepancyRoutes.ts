@@ -1,7 +1,6 @@
 import HttpStatusCodes from '@src/constants/HttpStatusCodes';
 
-import UserService from '@src/services/DiscrepancyService';
-import { IUser } from '@src/models/User';
+import DiscrepancyService from '@src/services/DiscrepancyService';
 import { IReq, IRes } from './types/express/misc';
 
 
@@ -9,14 +8,7 @@ import { IReq, IRes } from './types/express/misc';
 
 
 async function getAll(_: IReq, res: IRes) {
-//   const users = await UserService.getAll();
-    const data = {}
-    return res.status(HttpStatusCodes.OK).json(data);
-}
-
-async function getByUsers(_: IReq, res: IRes) {
-//   const users = await UserService.getAll();
-    const data = {}
+    const data = await DiscrepancyService.getAll();
     return res.status(HttpStatusCodes.OK).json(data);
 }
 
