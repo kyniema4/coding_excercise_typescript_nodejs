@@ -12,9 +12,26 @@ async function getAll(_: IReq, res: IRes) {
     return res.status(HttpStatusCodes.OK).json(data);
 }
 
+async function getByGame(_: IReq, res: IRes) {
+    const data = await DiscrepancyService.filterByGame();
+    return res.status(HttpStatusCodes.OK).json(data);
+}
+
+async function getByPlayer(_: IReq, res: IRes) {
+    const data = await DiscrepancyService.filterByPlayer();
+    return res.status(HttpStatusCodes.OK).json(data);
+}
+
+async function getByTeam(_: IReq, res: IRes) {
+    const data = await DiscrepancyService.filterByTeam();
+    return res.status(HttpStatusCodes.OK).json(data);
+}
 
 // **** Export default **** //
 
 export default {
   getAll,
+  getByGame,
+  getByPlayer,
+  getByTeam,
 } as const;

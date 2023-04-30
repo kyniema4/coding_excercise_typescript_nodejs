@@ -25,7 +25,17 @@ discrepanciesRouter.get(
 
 discrepanciesRouter.get(
   Paths.Discrepancy.Team,
-  DiscrepancyRoutes.getAll,
+  DiscrepancyRoutes.getByTeam,
+);
+
+discrepanciesRouter.get(
+  Paths.Discrepancy.Game,
+  DiscrepancyRoutes.getByGame,
+);
+
+discrepanciesRouter.get(
+  Paths.Discrepancy.Player,
+  DiscrepancyRoutes.getByPlayer,
 );
 
 // Add UserRouter

@@ -18,7 +18,21 @@ function getAll() {
     return DiscrepancyRepo.getAll();
 }
 
+function filterByGame() {
+    return DiscrepancyRepo.filterByGame();
+}
+
+function filterByPlayer() {
+    return DiscrepancyRepo.filterByPlayer();
+}
+
+function filterByTeam(){
+    return DiscrepancyRepo.filterByTeam();
+}
 
 export default {
   getAll,
+  filterByPlayer,
+  filterByGame,
+  filterByTeam
 } as const;
