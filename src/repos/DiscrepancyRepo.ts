@@ -8,6 +8,7 @@ import { readJSON, readJSONSync } from "fs-extra";
 
 import { Player } from "@src/models/player";
 import { FilterType } from "@src/models/FilterType";
+import { ParsedType } from "@src/models/ParsedType";
 
 /* #region Parse data for source.json */
 
@@ -122,13 +123,27 @@ function parseGameFromExternal(data: any) {
 async function parseSourceInputToCompareFormat(inputData: any , mode = 0) {
     const { statistics, game } = inputData;
 
-    var newStatistic = {
-        home: parseHomeAwayFromSource(statistics.home),
-        away: parseHomeAwayFromSource(statistics.away),
-        homePlayers: parsePlayerFromSource(statistics.home),
-        awayPlayers: parsePlayerFromSource(statistics.away),
-        game: parseGameFromSource(game)
+    var newStatistic:ParsedType = {
+        home: undefined,
+        away: undefined,
+        homePlayers: undefined,
+        awayPlayers: undefined,
+        game: undefined
     };
+
+    if(mode == FilterType.All || mode == FilterType.Team){
+        newStatistic.home = parseHomeAwayFromSource(statistics.home);
+        newStatistic.away = parseHomeAwayFromSource(statistics.away);
+    }
+
+    if(mode == FilterType.All || mode == FilterType.Player){
+        newStatistic.homePlayers = parsePlayerFromSource(statistics.home);
+        newStatistic.awayPlayers = parsePlayerFromSource(statistics.away);
+    }
+
+    if(mode == FilterType.All || mode == FilterType.Game){
+        newStatistic.game = parseGameFromSource(game)
+    }
 
 
     return newStatistic;
