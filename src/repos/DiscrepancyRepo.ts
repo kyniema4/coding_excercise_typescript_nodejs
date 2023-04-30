@@ -85,21 +85,9 @@ function parseHomeAwayFromExternal(data: any) {
 function parsePlayerFromExternal(data: any) {
     var arrUser: Player[] = [];
     
-    var rushingPlayers = data.rushing.players;
-    var receivingPlayers = data.receiving.players;
 
-    for(var player of rushingPlayers){
+    for(var player of data.players){
         arrUser.push(player)
-    }
-
-    for(var player of receivingPlayers){
-        var checkExist = checkPlayerExist(arrUser, player);
-        
-        if(checkExist>=0){
-            arrUser[checkExist] = {...arrUser[checkExist] , ...player}
-        }else{
-            arrUser.push(player);
-        }
     }
 
     return arrUser;
@@ -155,6 +143,75 @@ async function parseExternalInputToCompareFormat(inputData: any, mode=0) {
     return newStatistic;
 }
 
+// async function compareObject1Level(obj1:any, obj2:any){
+//     var compare = {};
+//     for(var key in obj1){
+
+//     }
+
+//     for(var key in obj2){
+
+//     }
+
+//     return compare;
+// }
+
+
+async function compareDiscrepancy(source:any, external:any , mode = 0){
+    var discrepancies:any ={};
+    // compare game and compare home/away statistic
+    var arrToCompare = ['home','away', 'game'];
+    for(var key in source){
+        discrepancies[key] = {};
+        if(arrToCompare.indexOf(key)>=0){
+            for(var _subKey in source[key]){
+                if(source[key][_subKey] != external[key][_subKey]){
+                    
+                    discrepancies[key][_subKey] = source[key][_subKey] +'-' + external[key][_subKey]
+                }
+            }
+            for(var _subKey in external[key]){
+                if(source[key][_subKey] != external[key][_subKey] && discrepancies[key][_subKey] == undefined ){
+                    discrepancies[key][_subKey] = source[key][_subKey] +'-' + external[key][_subKey]
+                }
+            }
+        }
+    }
+
+
+    // compare players
+    arrToCompare = ['homePlayers','awayPlayers'];
+    for(var key in source){
+        discrepancies[key] = [];
+        if(arrToCompare.indexOf(key)>=0){
+            var sourceArr = source[key];
+            var externalArr= external[key];
+            // find player to compare
+            for(var i = 0; i< sourceArr.length; i++){
+                discrepancies[key].push({id:sourceArr[i].id})
+                var length = discrepancies[key].length;
+                for(var j = 0 ; j< externalArr.length ;j++ ){
+                    if(sourceArr[i].id === externalArr[j].id){
+
+                        for(var _subKey in sourceArr[i]){
+                            if(sourceArr[i][_subKey] != externalArr[j][_subKey]){
+                                discrepancies[key][length-1][_subKey] = sourceArr[i][_subKey] +'-' + externalArr[j][_subKey]
+                            }
+                        }
+
+                        for(var _subKey in externalArr[j]){
+                            if(sourceArr[i][_subKey] != externalArr[j][_subKey]&& discrepancies[key][length-1][_subKey]!=undefined ){
+                                discrepancies[key][length-1][_subKey] = sourceArr[i][_subKey] +'-' + externalArr[j][_subKey]
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+    return discrepancies
+}
 
 /**
  * Get by mode0
@@ -162,10 +219,15 @@ async function parseExternalInputToCompareFormat(inputData: any, mode=0) {
 async function getDataByField(mode = 0) {
     const externalData = readJSONSync(__dirname + '/' + 'external.json');
     const sourceData = readJSONSync(__dirname + '/' + 'source.json');
-    const newExternalData = parseExternalInputToCompareFormat (externalData , mode);
-    const newSourceData = parseSourceInputToCompareFormat(sourceData , mode);
-
-    return newExternalData;
+    const newExternalData = await parseExternalInputToCompareFormat (externalData , mode);
+    const newSourceData = await parseSourceInputToCompareFormat(sourceData , mode);
+    const comparedDiscrepancies = await compareDiscrepancy(newSourceData ,newExternalData , mode);
+    // return newExternalData;
+    return {
+        external:newExternalData,
+        source: newSourceData,
+        comparedDiscrepancies: comparedDiscrepancies
+    };
 }
 
 /**
