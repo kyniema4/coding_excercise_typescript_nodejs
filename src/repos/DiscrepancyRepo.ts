@@ -6,6 +6,7 @@
 
 import { readJSON, readJSONSync } from "fs-extra";
 
+import { Player } from "@src/models/player";
 
 /* #region Parse data for source.json */
 function parseHomeAwayFromSource(data: any) {
@@ -19,7 +20,9 @@ function parseHomeAwayFromSource(data: any) {
 }
 
 function parsePlayerFromSource(data: any) {
-
+    var arrUser: Player[] = [];
+    
+    return arrUser;
 }
 
 function parseGameFromSource(data: any) {
