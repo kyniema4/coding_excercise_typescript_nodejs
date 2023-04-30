@@ -1,8 +1,8 @@
 export interface Player {
-    id: String,
-    rushAttempts: Number,
-    rushTds: Number,
-    rushYdsGained:Number,
-    rec: Number,
-    receivingYards: Number
+    id: any,
+    rushAttempts: any,
+    rushTds: any,
+    rushYdsGained:any,
+    rec: any,
+    receivingYards: any
 }

@@ -28,7 +28,7 @@ function parseHomeAwayFromSource(data: any) {
     }
 }
 
-function checkPlayerExist(arr: Player[] , item: Player){
+function checkPlayerExist(arr: any[] , item: Player){
     for(var i = 0 ; i< arr.length;i++){
         if(arr[i].id === item.id){
             
@@ -39,22 +39,34 @@ function checkPlayerExist(arr: Player[] , item: Player){
 }
 
 function parsePlayerFromSource(data: any) {
-    var arrUser: Player[] = [];
+    var arrUser = [];
     
     var rushingPlayers = data.rushing.players;
     var receivingPlayers = data.receiving.players;
 
     for(var player of rushingPlayers){
-        arrUser.push(player)
+        arrUser.push({
+            id: player.id,
+            rushAttempts: player.attempts,
+            rushTds: player.touchdowns,
+            rushYdsGained: player.yards,
+        })
     }
 
     for(var player of receivingPlayers){
         var checkExist = checkPlayerExist(arrUser, player);
         
         if(checkExist>=0){
-            arrUser[checkExist] = {...arrUser[checkExist] , ...player}
+            arrUser[checkExist] = {...arrUser[checkExist] , ...{
+                rec: player.receptions,
+                receivingYards: player.yards
+            }}
         }else{
-            arrUser.push(player);
+            arrUser.push({
+                id: player.id,
+                rec: player.receptions,
+                receivingYards: player.yards,
+            });
         }
     }
 
@@ -159,6 +171,7 @@ async function parseExternalInputToCompareFormat(inputData: any, mode=0) {
 
 async function compareDiscrepancy(source:any, external:any , mode = 0){
     var discrepancies:any ={};
+    discrepancies.id = source.game.id;
     // compare game and compare home/away statistic
     var arrToCompare = ['home','away', 'game'];
     for(var key in source){
@@ -182,8 +195,9 @@ async function compareDiscrepancy(source:any, external:any , mode = 0){
     // compare players
     arrToCompare = ['homePlayers','awayPlayers'];
     for(var key in source){
-        discrepancies[key] = [];
+        
         if(arrToCompare.indexOf(key)>=0){
+            discrepancies[key] = [];
             var sourceArr = source[key];
             var externalArr= external[key];
             // find player to compare
