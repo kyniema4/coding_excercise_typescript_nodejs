@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "7e5fddc8-9164-479c-82bb-c162ab2dca15",
+		"name": "test excercise",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1109150"
+	},
+	"item": [
+		{
+			"name": "discrepancies/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/api/discrepancies/all",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"discrepancies",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "discrepancies/player",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/api/discrepancies/player",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"discrepancies",
+						"player"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "discrepancies/team",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/api/discrepancies/team",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"discrepancies",
+						"team"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "discrepancies/game",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/api/discrepancies/game",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"discrepancies",
+						"game"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
