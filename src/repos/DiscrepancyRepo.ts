@@ -209,12 +209,12 @@ async function compareDiscrepancy(source:any, external:any , mode = 0){
             for(var _subKey in source[key]){
                 if(source[key][_subKey] != external[key][_subKey]){
                     
-                    discrepancies[key][_subKey] = source[key][_subKey] +'-' + external[key][_subKey]
+                    discrepancies[key][_subKey] = parseInt(source[key][_subKey]) - parseInt(external[key][_subKey])
                 }
             }
             for(var _subKey in external[key]){
                 if(source[key][_subKey] != external[key][_subKey] && discrepancies[key][_subKey] == undefined ){
-                    discrepancies[key][_subKey] = source[key][_subKey] +'-' + external[key][_subKey]
+                    discrepancies[key][_subKey] = parseInt(source[key][_subKey]) - parseInt(external[key][_subKey])
                 }
             }
         }
@@ -238,13 +238,14 @@ async function compareDiscrepancy(source:any, external:any , mode = 0){
 
                         for(var _subKey in sourceArr[i]){
                             if(sourceArr[i][_subKey] != externalArr[j][_subKey]){
-                                discrepancies[key][length-1][_subKey] = sourceArr[i][_subKey] +'-' + externalArr[j][_subKey]
+                                discrepancies[key][length-1][_subKey] = parseInt(sourceArr[i][_subKey]) - parseInt(externalArr[j][_subKey])
+                                // discrepancies[key][length-1][_subKey] = sourceArr[i][_subKey] +'-' + externalArr[j][_subKey]
                             }
                         }
 
                         for(var _subKey in externalArr[j]){
                             if(sourceArr[i][_subKey] != externalArr[j][_subKey]&& discrepancies[key][length-1][_subKey]!=undefined ){
-                                discrepancies[key][length-1][_subKey] = sourceArr[i][_subKey] +'-' + externalArr[j][_subKey]
+                                discrepancies[key][length-1][_subKey] = parseInt( sourceArr[i][_subKey]) - parseInt(externalArr[j][_subKey])
                             }
                         }
 
@@ -265,12 +266,12 @@ async function getDataByField(mode = 0) {
     const newExternalData = await parseExternalInputToCompareFormat (externalData , mode);
     const newSourceData = await parseSourceInputToCompareFormat(sourceData , mode);
     const comparedDiscrepancies = await compareDiscrepancy(newSourceData ,newExternalData , mode);
-    // return newExternalData;
-    return {
-        external:newExternalData,
-        source: newSourceData,
-        comparedDiscrepancies: comparedDiscrepancies
-    };
+    return comparedDiscrepancies;
+    // return {
+    //     external:newExternalData,
+    //     source: newSourceData,
+    //     comparedDiscrepancies: comparedDiscrepancies
+    // };
 }
 
 /**
