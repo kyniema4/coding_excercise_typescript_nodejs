@@ -200,11 +200,20 @@ async function parseExternalInputToCompareFormat(inputData: any, mode=0) {
 
 async function compareDiscrepancy(source:any, external:any , mode = 0){
     var discrepancies:any ={};
-    // discrepancies.id = source.game.id;
+    // discrepancies.id = source.game.gameId;
     // compare game and compare home/away statistic
     var arrToCompare = ['home','away', 'game'];
     for(var key in source){
-        discrepancies[key] = {};
+        if(key == 'game'){
+            discrepancies[key] = {
+                id: source[key]?.gameId??'',
+            };
+        }else{
+            discrepancies[key] = {
+                id: source[key]?.id??'',
+            };
+        }
+        
         if(arrToCompare.indexOf(key)>=0){
             for(var _subKey in source[key]){
                 if(source[key][_subKey] != external[key][_subKey]){

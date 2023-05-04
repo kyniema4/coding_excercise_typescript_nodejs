@@ -19,7 +19,7 @@ import HttpStatusCodes from '@src/constants/HttpStatusCodes';
 
 import { NodeEnvs } from '@src/constants/misc';
 import { RouteError } from '@src/other/classes';
-
+import cors from 'cors';
 
 // **** Variables **** //
 
@@ -32,6 +32,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser(EnvVars.CookieProps.Secret));
+app.use(cors({
+  origin:["http://localhost:3009","http://localhost:3000" ],
+  methods:"GET,PUT,POST,DELETE, OPTIONS",
+  allowedHeaders: ['Content-Type', 'Authorization, X-Requested-With, Accept, Cache-Control, Origin, token'],
+  credentials:true
+}))
 
 // Show routes called in console during development
 if (EnvVars.NodeEnv === NodeEnvs.Dev) {
