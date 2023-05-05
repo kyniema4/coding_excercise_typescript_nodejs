@@ -134,6 +134,9 @@ async function parseSourceInputToCompareFormat(inputData: any , mode = 0) {
     if(mode == FilterType.All || mode == FilterType.Team){
         newStatistic.home = parseHomeAwayFromSource(statistics.home);
         newStatistic.away = parseHomeAwayFromSource(statistics.away);
+    }else{
+        newStatistic.home = {id:statistics.home.id};
+        newStatistic.away = {id:statistics.away.id};
     }
 
     if(mode == FilterType.All || mode == FilterType.Player){
@@ -170,6 +173,9 @@ async function parseExternalInputToCompareFormat(inputData: any, mode=0) {
     if(mode == FilterType.All || mode == FilterType.Team){
         newStatistic.home = parseHomeAwayFromExternal(game.home);
         newStatistic.away = parseHomeAwayFromExternal(game.away);
+    }else{
+        newStatistic.home = {id:game.home.id};
+        newStatistic.away = {id:game.away.id};
     }
 
     if(mode == FilterType.All || mode == FilterType.Player){
