@@ -1,7 +1,12 @@
-## About
+## DOCKER SCRIPT
 
-This project was created with [express-generator-typescript](https://github.com/seanpmaxwell/express-generator-typescript).
+$ docker-compose build
 
+$ docker-compose up -d
+
+## STOP DOCKER 
+
+$docker-compose down
 
 ## Available Scripts
 

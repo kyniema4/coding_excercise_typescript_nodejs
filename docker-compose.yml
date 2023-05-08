@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  ts-node-docker:
+  coding_excercise:
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,9 +9,10 @@ services:
     volumes:
       - ./src:/home/node/app/src
       - ./nodemon.json:/home/node/app/nodemon.json
-    container_name: ts-node-docker
+      - /home/node/app/node_modules
+    container_name: coding_excercise
     expose:
-      - '3000'
+      - '3009'
     ports:
-      - '3000:3000'
+      - '3009:3009'
     command: npm run dev

@@ -1,0 +1,7 @@
+docker-compose build
+
+docker-compose up -d
+
+-----------
+FOR STOP:
+docker-compose down

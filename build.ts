@@ -17,8 +17,13 @@ import childProcess from 'child_process';
     // Copy front-end files
     await copy('./src/public', './dist/public');
     await copy('./src/views', './dist/views');
+    
     // Copy back-end files
     await exec('tsc --build tsconfig.prod.json', './');
+
+    // copy outside resources
+    await copy('./src/repos/source.json', './dist/repos/source.json');
+    await copy('./src/repos/external.json', './dist/repos/external.json');
   } catch (err) {
     logger.err(err);
   }
