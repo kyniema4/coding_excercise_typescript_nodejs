@@ -222,14 +222,17 @@ async function compareDiscrepancy(source:any, external:any , mode = 0){
         
         if(arrToCompare.indexOf(key)>=0){
             for(var _subKey in source[key]){
-                discrepancies[key][_subKey] = parseInt(source[key][_subKey]) - parseInt(external[key][_subKey])
+                if(_subKey!=='id'&&_subKey!='gameId'){
+                    discrepancies[key][_subKey] = parseInt(source[key][_subKey]) - parseInt(external[key][_subKey])
+                }
+                
                 // if(source[key][_subKey] != external[key][_subKey]){
                     
                 //     discrepancies[key][_subKey] = parseInt(source[key][_subKey]) - parseInt(external[key][_subKey])
                 // }
             }
             for(var _subKey in external[key]){
-                if(discrepancies[key][_subKey] == undefined){
+                if(_subKey!=='id'&&_subKey!='gameId'&&discrepancies[key][_subKey] == undefined){
                     discrepancies[key][_subKey] = parseInt(source[key][_subKey]) - parseInt(external[key][_subKey])
                 }
                 
@@ -257,7 +260,12 @@ async function compareDiscrepancy(source:any, external:any , mode = 0){
                     if(sourceArr[i].id === externalArr[j].id){
 
                         for(var _subKey in sourceArr[i]){
-                            discrepancies[key][length-1][_subKey] = parseInt(sourceArr[i][_subKey]) - parseInt(externalArr[j][_subKey])
+                            if(_subKey!=='id'){
+                                discrepancies[key][length-1][_subKey] = parseInt(sourceArr[i][_subKey]) - parseInt(externalArr[j][_subKey])
+                            }else{
+                                discrepancies[key][length-1][_subKey] = sourceArr[i][_subKey];
+                            }
+                            
                             // if(sourceArr[i][_subKey] != externalArr[j][_subKey]){
                             //     discrepancies[key][length-1][_subKey] = parseInt(sourceArr[i][_subKey]) - parseInt(externalArr[j][_subKey])
                             //     // discrepancies[key][length-1][_subKey] = sourceArr[i][_subKey] +'-' + externalArr[j][_subKey]
@@ -265,7 +273,7 @@ async function compareDiscrepancy(source:any, external:any , mode = 0){
                         }
 
                         for(var _subKey in externalArr[j]){
-                            if(discrepancies[key][length-1][_subKey]!=undefined){
+                            if(_subKey!=='id'&&discrepancies[key][length-1][_subKey]!=undefined){
                                 discrepancies[key][length-1][_subKey] = parseInt( sourceArr[i][_subKey]) - parseInt(externalArr[j][_subKey])
                             }
                             
